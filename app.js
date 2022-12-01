@@ -90,11 +90,14 @@ app.post("/login", async (req, res) => {
                 expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                 httpOnly: true, // This will make sure cookies can only accessed by backendserver only
             }
-
-            res.status(200).cookie('token', token, options)
+            res.status(200).cookie('token', token, options).json({
+                success: true,
+                message: "login successful"
+            })
         }
-
-        res.send(400).send("email or password is incorrect")
+        else {
+            res.status(400).send("email or password is incorrect")
+        }
 
     } catch (error) {
         console.log(error)
